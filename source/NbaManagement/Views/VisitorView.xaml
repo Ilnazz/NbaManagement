@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="NbaManagement.Views.VisitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vms="clr-namespace:NbaManagement.ViewModels">
+    <UniformGrid Columns="2" Rows="2">
+        <Button Content="Teams" Command="{Binding NavigateCommand}" CommandParameter="{x:Type vms:TeamsViewModel}"/>
+        <Button Content="Players" Command="{Binding NavigateCommand}" CommandParameter="{x:Type vms:PlayersViewModel}"/>
+        <Button Content="Matchups" Command="{Binding NavigateCommand}" CommandParameter="{x:Type vms:MatchupsViewModel}"/>
+        <Button Content="Photos" Command="{Binding NavigateCommand}" CommandParameter="{x:Type vms:PhotosViewModel}"/>
+        
+        <UniformGrid.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource Styles.NavigationButton}"/>
+        </UniformGrid.Resources>
+    </UniformGrid>
+</UserControl>

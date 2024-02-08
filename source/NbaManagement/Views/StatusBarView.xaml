@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="NbaManagement.Views.StatusBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vms="clr-namespace:NbaManagement.ViewModels"
+             Background="{StaticResource Colors.AccentColor}">
+    <UserControl.DataContext>
+        <vms:StatusBarViewModel/>
+    </UserControl.DataContext>
+    <TextBlock TextAlignment="Center" Foreground="White" Margin="5">
+        <TextBlock.Text>
+            <MultiBinding StringFormat="{}The current season is {0}–{1}, and the NBA already has a history of {2} years">
+                <Binding Path="SeasonStartYear"/>
+                <Binding Path="SeasonEndYear"/>
+                <Binding Path="NbaAge"/>
+            </MultiBinding>
+        </TextBlock.Text>
+    </TextBlock>
+</UserControl>
