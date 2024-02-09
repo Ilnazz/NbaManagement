@@ -1,28 +1,48 @@
 ﻿using NbaManagement.Database;
+using NbaManagement.Enums;
+using NbaManagement.Mvvm.Input;
 using NbaManagement.ViewModels.Base;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace NbaManagement.ViewModels
 {
     public class TeamDetailViewModel : TitledViewModel
     {
-        public IEnumerable<Player> PowerForwardPlayers { get; }
+        #region Properties
+        public int ShownTeamDetailIndex { get; }
 
-        public IEnumerable<Player> ShootingGuardPlayers { get; }
+        public Team Team { get; }
 
-        public IEnumerable<Player> CenterPlayers { get; }
+        public PlayerPositionViewModel PowerForwardPositionViewModel { get; }
 
-        public IEnumerable<Player> SmallForwardPlayers { get; }
+        public PlayerPositionViewModel ShootingGuardPositionViewModel { get; }
 
-        public IEnumerable<Player> PointGuardPlayers { get; }
+        public PlayerPositionViewModel CenterPositionViewModel { get; }
 
-        private readonly Team _team;
+        public PlayerPositionViewModel SmallForwardPositionViewModel { get; }
 
-        public TeamDetailViewModel(Team team)
+        public PlayerPositionViewModel PointGuardPositionViewModel { get; }
+        #endregion
+
+        public IRelayCommand SearchCommand { get; }
+
+        public TeamDetailViewModel(Team team, TeamDetail? shownTeamDetail = null)
         {
-            _team = team;
+            Team = team;
+            ShownTeamDetailIndex = shownTeamDetail.HasValue ? (int)shownTeamDetail.Value : -1;
             
             Title = "Team Detail";
+
+            PowerForwardPositionViewModel = new PlayerPositionViewModel("PF", Team.Player.Where(p => p.IsPowerForward));
+            ShootingGuardPositionViewModel = new PlayerPositionViewModel("SG", Team.Player.Where(p => p.IsShootingGuard));
+            CenterPositionViewModel = new PlayerPositionViewModel("CP", Team.Player.Where(p => p.IsCenter));
+            SmallForwardPositionViewModel = new PlayerPositionViewModel("SF", Team.Player.Where(p => p.IsSmallForward));
+            PointGuardPositionViewModel = new PlayerPositionViewModel("PG", Team.Player.Where(p => p.IsPointGuard));
+
+            SearchCommand = new RelayCommand(() =>
+            {
+
+            });
         }
     }
 }

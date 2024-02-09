@@ -2,13 +2,16 @@
     x:Class="NbaManagement.Startup.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:NbaManagement.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:views="clr-namespace:NbaManagement.Views"
     xmlns:vms="clr-namespace:NbaManagement.ViewModels">
     <Application.Resources>
 
+        <!--#region Images-->
         <BitmapImage x:Key="Images.Logo" UriSource="../Resources/Images/Logo.jpg" />
         <BitmapImage x:Key="Images.Lineup" UriSource="../Resources/Images/Lineup.jpg" />
+        <!--#endregion-->
 
         <SolidColorBrush x:Key="Colors.AccentColor" Color="#6995c2" />
 
@@ -17,6 +20,8 @@
 
         <sys:Double x:Key="FontSizes.HeaderFontSize">20</sys:Double>
         <sys:Double x:Key="FontSizes.TextFontSize">14</sys:Double>
+
+        <converters:TeamToImageConverter x:Key="TeamToImageConverter" />
 
         <!--#region TextBlock styles-->
         <Style TargetType="{x:Type TextBlock}">
@@ -32,8 +37,8 @@
 
         <!--#region Button styles-->
         <Style TargetType="{x:Type Button}">
-            <Setter Property="FontFamily" Value="{StaticResource FontFamilies.HeaderFontFamily}" />
-            <Setter Property="FontSize" Value="{StaticResource FontSizes.HeaderFontSize}" />
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilies.TextFontFamily}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizes.TextFontSize}" />
         </Style>
 
         <Style x:Key="Styles.NavigationButton" TargetType="Button">
@@ -43,6 +48,27 @@
             <Setter Property="Margin" Value="10" />
             <Setter Property="Background" Value="{StaticResource Colors.AccentColor}" />
             <Setter Property="Foreground" Value="White" />
+        </Style>
+        <!--#endregion-->
+
+        <!--#region Hyperlink styles-->
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilies.TextFontFamily}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizes.TextFontSize}" />
+        </Style>
+        <!--#endregion-->
+
+        <!--#region ComboBox styles-->
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilies.TextFontFamily}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizes.TextFontSize}" />
+        </Style>
+        <!--#endregion-->
+
+        <!--#region TabControl styles-->
+        <Style TargetType="{x:Type TabControl}">
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilies.TextFontFamily}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizes.TextFontSize}" />
         </Style>
         <!--#endregion-->
 

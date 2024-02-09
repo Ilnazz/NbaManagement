@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Data.Entity;
 using System.Windows;
 using NbaManagement.Database;
 using NbaManagement.Mvvm.DependencyInjection;
@@ -18,7 +19,24 @@ namespace NbaManagement.Startup
             Ioc.Default.ConfigureServices(serviceContainer);
 
             // Registering database
-            serviceContainer.AddService(typeof(DatabaseContext), new DatabaseContext());
+            var databaseContext = new DatabaseContext();
+
+            // Caching database entities
+            databaseContext.Team.Load();
+            databaseContext.Player.Load();
+            databaseContext.Gender.Load();
+            databaseContext.Seasons.Load();
+            databaseContext.Country.Load();
+            databaseContext.Colleges.Load();
+            databaseContext.Matchups.Load();
+            databaseContext.Locations.Load();
+            databaseContext.Divisions.Load();
+            databaseContext.Conferences.Load();
+            databaseContext.MatchupTypes.Load();
+            databaseContext.MatchupStatus.Load();
+            databaseContext.PlayerPosition.Load();
+
+            serviceContainer.AddService(typeof(DatabaseContext), databaseContext);
             
             // Registering services that depend on database
             serviceContainer.AddService(typeof(TeamService), (sc, _) =>

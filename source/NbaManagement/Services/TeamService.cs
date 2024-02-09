@@ -1,7 +1,5 @@
 ﻿using NbaManagement.Database;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Threading.Tasks;
 
 namespace NbaManagement.Services
 {
@@ -14,6 +12,8 @@ namespace NbaManagement.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Team>> GetTeamsAsync() => await _dbContext.Team.ToArrayAsync();
+        public IEnumerable<Division> GetDivisions() => _dbContext.Divisions.Local;
+
+        public IEnumerable<Conference> GetConferences() => _dbContext.Conferences.Local;
     }
 }

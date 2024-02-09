@@ -14,21 +14,33 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <DockPanel>
-            <TextBlock>
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} | {1} of {2}">
-                        <Binding Path="TeamName" />
-                        <Binding Path="DivisionName" />
-                        <Binding Path="ConferenceName" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+        <DockPanel Margin="0,0,0,5">
+            <StackPanel DataContext="{Binding Team}" Orientation="Horizontal">
+                <Image
+                    Width="50"
+                    Height="50"
+                    Margin="0,0,5,0"
+                    Source="{Binding ., Converter={StaticResource TeamToImageConverter}}" />
+                <TextBlock VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} | {1} of {2}">
+                            <Binding Path="Name" />
+                            <Binding Path="Division.Name" />
+                            <Binding Path="Division.Conference.Name" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
 
             <StackPanel
                 HorizontalAlignment="Right"
+                VerticalAlignment="Center"
                 DockPanel.Dock="Right"
                 Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,5,0"
+                    VerticalAlignment="Center"
+                    Text="Season: " />
                 <ComboBox Margin="0,0,5,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate />
@@ -39,71 +51,85 @@
             </StackPanel>
         </DockPanel>
 
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" SelectedIndex="{Binding ShownTeamDetailIndex, Mode=OneTime}">
             <TabItem Header="Roster">
-                <ListView ItemsSource="{Binding Players}">
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding ShirtNumber}" Header="No." />
-                                <GridViewColumn DisplayMemberBinding="{Binding Position.Name}" Header="Name" />
-                                <GridViewColumn DisplayMemberBinding="{Binding DateOfBirth}" Header="DateOfBirth" />
-                                <GridViewColumn Header="College" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Experience}" Header="Experience" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Salary, StringFormat='{}{0}'}" Header="Salary" />
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid ItemsSource="{Binding Team.Player}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding ShirtNumber}"
+                                Header="No." />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding FirstPosition.Name}"
+                                Header="Name" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding DateOfBirth}"
+                                Header="DateOfBirth" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding College.Name}"
+                                Header="College" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Experience}"
+                                Header="Experience" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Salary, StringFormat='{}{0}'}"
+                                Header="Salary" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Matchup">
-                <DataGrid ItemsSource="{Binding Matchups}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Date, StringFormat='{}{0:yyyy/MM/dd}'}"
-                            Header="Date" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Type.Name}"
-                            Header="Matchup Type" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding}"
-                            Header="Opponent" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding StartTime, StringFormat='{}{0}'}"
-                            Header="StartTime" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding StartTime, StringFormat='{}{0}'}"
-                            Header="Result" />
-                        <DataGridTemplateColumn Width="*" Header="Result">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0}-{1}">
-                                                <Binding Path="TeamAwayScore" />
-                                                <Binding Path="TeamHomeScore" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Location.Name}"
-                            Header="Location" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Status.Title}"
-                            Header="Status" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <DataGrid ItemsSource="{Binding Team.Matchups}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Date, StringFormat='{}{0:yyyy/MM/dd}'}"
+                                Header="Date" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Type.Name}"
+                                Header="Matchup Type" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding TeamAway.Name}"
+                                Header="Opponent" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding StartTime, StringFormat='{}{0}'}"
+                                Header="StartTime" />
+                            <DataGridTemplateColumn Width="*" Header="Result">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}-{1}">
+                                                    <Binding Path="TeamAwayScore" />
+                                                    <Binding Path="TeamHomeScore" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Location.Name}"
+                                Header="Location" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Status.Name}"
+                                Header="Status" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Lineup">
@@ -137,22 +163,19 @@
                         Grid.Column="1"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Players="{Binding PowerForwardPlayers}"
-                        PositionName="PF" />
+                        DataContext="{Binding PowerForwardPositionViewModel}" />
 
                     <views:PlayerPositionView
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="1"
-                        Players="{Binding ShootingGuardPlayers}"
-                        PositionName="SG" />
+                        DataContext="{Binding ShootingGuardPositionViewModel}" />
 
                     <views:PlayerPositionView
                         Grid.Row="1"
                         Grid.Column="3"
                         VerticalAlignment="Bottom"
-                        Players="{Binding CenterPlayers}"
-                        PositionName="C" />
+                        DataContext="{Binding CenterPositionViewModel}" />
 
                     <views:PlayerPositionView
                         Grid.Row="1"
@@ -160,17 +183,25 @@
                         Grid.Column="5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Players="{Binding SmallForwardPlayers}"
-                        PositionName="SF" />
+                        DataContext="{Binding SmallForwardPositionViewModel}" />
 
                     <views:PlayerPositionView
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="5"
-                        Players="{Binding PointGuardPlayers}"
-                        PositionName="PG" />
+                        DataContext="{Binding PointGuardPositionViewModel}" />
                 </Grid>
             </TabItem>
+
+            <TabControl.Resources>
+                <Style TargetType="DataGrid">
+                    <Setter Property="CanUserAddRows" Value="False" />
+                    <Setter Property="CanUserDeleteRows" Value="False" />
+                    <Setter Property="IsReadOnly" Value="True" />
+                    <Setter Property="AutoGenerateColumns" Value="False" />
+                    <Setter Property="AlternatingRowBackground" Value="Gainsboro" />
+                </Style>
+            </TabControl.Resources>
         </TabControl>
     </Grid>
 </UserControl>

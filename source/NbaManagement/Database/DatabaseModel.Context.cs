@@ -19,12 +19,10 @@ namespace NbaManagement.Database
             : base("name=DatabaseContext")
         {
         }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) =>
             throw new UnintentionalCodeFirstException();
-        }
-    
+
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Gender> Gender { get; set; }
         public virtual DbSet<Player> Player { get; set; }

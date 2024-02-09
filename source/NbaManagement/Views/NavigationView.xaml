@@ -24,6 +24,7 @@
                 TextAlignment="Center" />
 
             <Button
+                Padding="5"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Command="{Binding NavigateBackCommand}"
