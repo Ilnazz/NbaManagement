@@ -87,16 +87,6 @@
         <DataTemplate DataType="{x:Type vms:TeamDetailViewModel}">
             <views:TeamDetailView />
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type vms:PlayersViewModel}">
-            <views:PlayersView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:MatchupsViewModel}">
-            <views:MatchupsView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:PhotosViewModel}">
-            <views:PhotosView />
-        </DataTemplate>
         <!--#endregion Views locating-->
 
     </Application.Resources>

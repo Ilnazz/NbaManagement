@@ -237,8 +237,6 @@
     <Compile Include="Database\Team.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\MatchupService.cs" />
-    <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Startup\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -249,10 +247,7 @@
     <Compile Include="ViewModels\Base\NavigatableTitledViewModel.cs" />
     <Compile Include="ViewModels\Base\TitledViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MatchupsViewModel.cs" />
-    <Compile Include="ViewModels\PhotosViewModel.cs" />
     <Compile Include="ViewModels\PlayerPositionViewModel.cs" />
-    <Compile Include="ViewModels\PlayersViewModel.cs" />
     <Compile Include="ViewModels\TeamDetailViewModel.cs" />
     <Compile Include="Models\TeamsByDivision.cs" />
     <Compile Include="Models\TeamsByDivisionByConference.cs" />
@@ -263,20 +258,11 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MatchupsView.xaml.cs">
-      <DependentUpon>MatchupsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PhotosView.xaml.cs">
-      <DependentUpon>PhotosView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PlayerPositionView.xaml.cs">
       <DependentUpon>PlayerPositionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PlayersView.xaml.cs">
-      <DependentUpon>PlayersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
@@ -447,14 +433,11 @@
   <ItemGroup>
     <Page Include="Startup\MainWindow.xaml" />
     <Page Include="Views\MainView.xaml" />
-    <Page Include="Views\MatchupsView.xaml" />
     <Page Include="Views\NavigationView.xaml" />
-    <Page Include="Views\PhotosView.xaml" />
     <Page Include="Views\PlayerPositionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PlayersView.xaml" />
     <Page Include="Views\StatusBarView.xaml" />
     <Page Include="Views\TeamDetailView.xaml" />
     <Page Include="Views\TeamsView.xaml" />

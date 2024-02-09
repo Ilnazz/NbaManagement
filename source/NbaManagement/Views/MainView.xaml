@@ -38,6 +38,7 @@
                 Content="Visitor" />
             <Button
                 Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Type vms:VisitorViewModel}"
                 Content="Admin"
                 IsEnabled="False" />
 

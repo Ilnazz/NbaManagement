@@ -7,10 +7,7 @@ namespace NbaManagement.Services
     {
         private readonly DatabaseContext _dbContext;
 
-        public TeamService(DatabaseContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public TeamService(DatabaseContext dbContext) => _dbContext = dbContext;
 
         public IEnumerable<Division> GetDivisions() => _dbContext.Divisions.Local;
 

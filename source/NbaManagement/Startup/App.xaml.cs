@@ -42,12 +42,6 @@ namespace NbaManagement.Startup
             serviceContainer.AddService(typeof(TeamService), (sc, _) =>
                 new TeamService(sc.GetRequiredService<DatabaseContext>()));
             
-            serviceContainer.AddService(typeof(PlayerService), (sc, _) =>
-                new PlayerService(sc.GetRequiredService<DatabaseContext>()));
-            
-            serviceContainer.AddService(typeof(MatchupService), (sc, _) =>
-                new MatchupService(sc.GetRequiredService<DatabaseContext>()));
-
             // Registering navigation service
             var navigationService = new NavigationService(serviceContainer);
             serviceContainer.AddService(typeof(INavigationService), navigationService);
@@ -67,18 +61,11 @@ namespace NbaManagement.Startup
             serviceContainer.AddService(typeof(TeamsViewModel), (sc, _) =>
                 new TeamsViewModel(sc.GetRequiredService<INavigationService>(), sc.GetRequiredService<TeamService>()));
             
-            serviceContainer.AddService(typeof(PlayersViewModel), (sc, _) =>
-                new PlayersViewModel(sc.GetRequiredService<INavigationService>(), sc.GetRequiredService<PlayerService>()));
-            
-            serviceContainer.AddService(typeof(MatchupsViewModel), (sc, _) =>
-                new MatchupsViewModel(sc.GetRequiredService<INavigationService>(), sc.GetRequiredService<MatchupService>()));
-            
-            serviceContainer.AddService(typeof(PhotosViewModel), new PhotosViewModel());
-
+            // Creating and showing window
             new MainWindow().Show();
 
+            // Navigating to initial view model
             navigationService.Navigate(typeof(MainViewModel));
-            //navigationService.Navigate(new TeamDetailViewModel(null));
         }
     }
 }
