@@ -4,9 +4,6 @@ namespace NbaManagement.Views
 {
     public partial class TeamDetailView : UserControl
     {
-        public TeamDetailView()
-        {
-            InitializeComponent();
-        }
+        public TeamDetailView() => InitializeComponent();
     }
 }

@@ -30,11 +30,13 @@ namespace NbaManagement.Database
         public string Email { get; set; }
         public int CountryId { get; set; }
         public int TeamId { get; set; }
+        public Nullable<int> CollegeId { get; set; }
     
         public virtual Country Country { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual Team Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlayerPosition> PlayerPosition { get; set; }
+        public virtual College College { get; set; }
     }
 }

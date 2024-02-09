@@ -8,6 +8,8 @@ namespace NbaManagement.Mvvm.Navigation
         
         void Navigate(Type viewModelType);
 
+        void Navigate(object viewModel);
+
         bool CanNavigateBack();
 
         void NavigateBack();

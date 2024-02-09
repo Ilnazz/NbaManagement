@@ -14,6 +14,23 @@
         <AssociationConnector Association="DatabaseModel.FK_Player_Gender" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseModel.FK_Player_Team" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseModel.Player_Position" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DatabaseModel.College" Width="1.5" PointX="0.75" PointY="18.625" />
+        <EntityTypeShape EntityType="DatabaseModel.Conference" Width="1.5" PointX="0.75" PointY="16" />
+        <EntityTypeShape EntityType="DatabaseModel.Division" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Location" Width="1.5" PointX="0.75" PointY="25.125" />
+        <EntityTypeShape EntityType="DatabaseModel.Matchup" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabaseModel.MatchupStatu" Width="1.5" PointX="0.75" PointY="27.375" />
+        <EntityTypeShape EntityType="DatabaseModel.MatchupType" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Season" Width="1.5" PointX="0.75" PointY="29.75" />
+        <AssociationConnector Association="DatabaseModel.FK_Player_College" />
+        <AssociationConnector Association="DatabaseModel.FK_Division_Conference" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_Division" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_Location" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_MatchupStatus" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_MatchupType" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_Season" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_Team" />
+        <AssociationConnector Association="DatabaseModel.FK_Matchup_Team1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

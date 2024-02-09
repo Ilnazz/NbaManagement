@@ -11,7 +11,7 @@ namespace NbaManagement.Mvvm.Navigation
         #region Fields
         private readonly IServiceProvider _serviceProvider;
         
-        private readonly Stack<Type> _viewModelHistory = new Stack<Type>();
+        private readonly Stack<object> _viewModelHistory = new Stack<object>();
         #endregion
         
         public NavigationService(IServiceProvider serviceProvider) =>
@@ -19,9 +19,14 @@ namespace NbaManagement.Mvvm.Navigation
 
         public void Navigate(Type viewModelType)
         {
-            _viewModelHistory.Push(viewModelType);
-            
             var viewModel = _serviceProvider.GetRequiredService(viewModelType);
+            _viewModelHistory.Push(viewModel);
+            Navigated?.Invoke(viewModel);
+        }
+
+        public void Navigate(object viewModel)
+        {
+            _viewModelHistory.Push(viewModel);
             Navigated?.Invoke(viewModel);
         }
 
@@ -33,9 +38,7 @@ namespace NbaManagement.Mvvm.Navigation
                 throw new InvalidOperationException();
 
             _viewModelHistory.Pop();
-
-            var viewModelType = _viewModelHistory.Peek();
-            var viewModel = _serviceProvider.GetRequiredService(viewModelType);
+            var viewModel = _viewModelHistory.Peek();
             Navigated?.Invoke(viewModel);
         }
     }

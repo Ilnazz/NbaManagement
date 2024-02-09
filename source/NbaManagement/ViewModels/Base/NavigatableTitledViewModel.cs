@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
-using NbaManagement.Mvvm;
 using NbaManagement.Mvvm.Input;
 using NbaManagement.Mvvm.Navigation;
 

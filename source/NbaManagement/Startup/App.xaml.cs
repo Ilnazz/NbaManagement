@@ -58,7 +58,9 @@ namespace NbaManagement.Startup
             serviceContainer.AddService(typeof(PhotosViewModel), new PhotosViewModel());
 
             new MainWindow().Show();
+
             navigationService.Navigate(typeof(MainViewModel));
+            //navigationService.Navigate(new TeamDetailViewModel(null));
         }
     }
 }

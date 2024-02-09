@@ -169,6 +169,30 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\College.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Conference.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Division.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Location.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Matchup.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\MatchupStatu.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\MatchupType.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Season.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mvvm\ComponentModel\ObservableObject.cs" />
     <Compile Include="Mvvm\DependencyInjection\Ioc.cs" />
     <Compile Include="Mvvm\DependencyInjection\ServiceProviderExtensions.cs" />
@@ -224,6 +248,7 @@
     <Compile Include="ViewModels\MatchupsViewModel.cs" />
     <Compile Include="ViewModels\PhotosViewModel.cs" />
     <Compile Include="ViewModels\PlayersViewModel.cs" />
+    <Compile Include="ViewModels\TeamDetailViewModel.cs" />
     <Compile Include="ViewModels\TeamsViewModel.cs" />
     <Compile Include="ViewModels\StatusBarViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
@@ -240,11 +265,17 @@
     <Compile Include="Views\PhotosView.xaml.cs">
       <DependentUpon>PhotosView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlayerPositionView.xaml.cs">
+      <DependentUpon>PlayerPositionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlayersView.xaml.cs">
       <DependentUpon>PlayersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeamDetailView.xaml.cs">
+      <DependentUpon>TeamDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeamsView.xaml.cs">
       <DependentUpon>TeamsView.xaml</DependentUpon>
@@ -291,7 +322,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Images\Logo.jpg" />
+    <Resource Include="Resources\Images\Lineup.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\Images\Logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Database\DatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
@@ -317,8 +353,13 @@
     <Page Include="Views\MatchupsView.xaml" />
     <Page Include="Views\NavigationView.xaml" />
     <Page Include="Views\PhotosView.xaml" />
+    <Page Include="Views\PlayerPositionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlayersView.xaml" />
     <Page Include="Views\StatusBarView.xaml" />
+    <Page Include="Views\TeamDetailView.xaml" />
     <Page Include="Views\TeamsView.xaml" />
     <Page Include="Views\VisitorView.xaml" />
   </ItemGroup>

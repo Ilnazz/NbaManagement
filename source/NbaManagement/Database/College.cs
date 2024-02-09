@@ -12,27 +12,18 @@ namespace NbaManagement.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Team
+    public partial class College
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Team()
+        public College()
         {
-            this.Player = new HashSet<Player>();
-            this.Matchups = new HashSet<Matchup>();
-            this.Matchups1 = new HashSet<Matchup>();
+            this.Players = new HashSet<Player>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Abbr { get; set; }
-        public int DivisionId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Player { get; set; }
-        public virtual Division Division { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matchup> Matchups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Matchup> Matchups1 { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
     }
 }

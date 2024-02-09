@@ -4,7 +4,21 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище DatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище DatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="College">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Id" />
@@ -13,12 +27,56 @@
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="3" Nullable="false" />
         </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConferenceId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Gender">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Matchup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SeasonId" Type="int" Nullable="false" />
+          <Property Name="MatchupTypeId" Type="int" Nullable="false" />
+          <Property Name="TeamAwayId" Type="int" Nullable="false" />
+          <Property Name="TeamHomeId" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="smalldatetime" Nullable="false" />
+          <Property Name="TeamAwayScore" Type="int" Nullable="false" />
+          <Property Name="TeamHomeScore" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" />
+        </EntityType>
+        <EntityType Name="MatchupStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -34,6 +92,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="350" Nullable="false" />
           <Property Name="CountryId" Type="int" Nullable="false" />
           <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="CollegeId" Type="int" />
         </EntityType>
         <EntityType Name="Player_Position">
           <Key>
@@ -50,6 +109,13 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Team">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,7 +123,104 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Abbr" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="DivisionId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Division_Conference">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
+          <End Role="Division" Type="Self.Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Division">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_MatchupStatus">
+          <End Role="MatchupStatus" Type="Self.MatchupStatus" Multiplicity="1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchupStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_MatchupType">
+          <End Role="MatchupType" Type="Self.MatchupType" Multiplicity="1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="MatchupTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Season">
+          <End Role="Season" Type="Self.Season" Multiplicity="1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="SeasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="TeamAwayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Team1">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Matchup" Type="Self.Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="TeamHomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_College">
+          <End Role="College" Type="Self.College" Multiplicity="0..1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="College">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CollegeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Player_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
           <End Role="Player" Type="Self.Player" Multiplicity="*" />
@@ -118,13 +281,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Team_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище DatabaseModelContainer">
+          <EntitySet Name="College" EntityType="Self.College" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conference" EntityType="Self.Conference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matchup" EntityType="Self.Matchup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchupStatus" EntityType="Self.MatchupStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchupType" EntityType="Self.MatchupType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player_Position" EntityType="Self.Player_Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerPosition" EntityType="Self.PlayerPosition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Division_Conference" Association="Self.FK_Division_Conference">
+            <End Role="Conference" EntitySet="Conference" />
+            <End Role="Division" EntitySet="Division" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Location" Association="Self.FK_Matchup_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_MatchupStatus" Association="Self.FK_Matchup_MatchupStatus">
+            <End Role="MatchupStatus" EntitySet="MatchupStatus" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_MatchupType" Association="Self.FK_Matchup_MatchupType">
+            <End Role="MatchupType" EntitySet="MatchupType" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Season" Association="Self.FK_Matchup_Season">
+            <End Role="Season" EntitySet="Season" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Team" Association="Self.FK_Matchup_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Team1" Association="Self.FK_Matchup_Team1">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Matchup" EntitySet="Matchup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_College" Association="Self.FK_Player_College">
+            <End Role="College" EntitySet="College" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
           <AssociationSet Name="FK_Player_Country" Association="Self.FK_Player_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="Player" EntitySet="Player" />
@@ -145,9 +360,12 @@
             <End Role="Team" EntitySet="Team" />
             <End Role="Player" EntitySet="Player" />
           </AssociationSet>
+          <AssociationSet Name="FK_Team_Division" Association="Self.FK_Team_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -186,6 +404,8 @@
           <NavigationProperty Name="Gender" Relationship="Self.FK_Player_Gender" FromRole="Player" ToRole="Gender" />
           <NavigationProperty Name="Team" Relationship="Self.FK_Player_Team" FromRole="Player" ToRole="Team" />
           <NavigationProperty Name="PlayerPosition" Relationship="Self.Player_Position" FromRole="Player" ToRole="PlayerPosition" />
+          <Property Name="CollegeId" Type="Int32" />
+          <NavigationProperty Name="College" Relationship="DatabaseModel.FK_Player_College" FromRole="Player" ToRole="College" />
         </EntityType>
         <EntityType Name="PlayerPosition">
           <Key>
@@ -203,6 +423,10 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Abbr" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Player" Relationship="Self.FK_Player_Team" FromRole="Team" ToRole="Player" />
+          <Property Name="DivisionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Division" Relationship="DatabaseModel.FK_Team_Division" FromRole="Team" ToRole="Division" />
+          <NavigationProperty Name="Matchups" Relationship="DatabaseModel.FK_Matchup_Team" FromRole="Team" ToRole="Matchup" />
+          <NavigationProperty Name="Matchups1" Relationship="DatabaseModel.FK_Matchup_Team1" FromRole="Team" ToRole="Matchup" />
         </EntityType>
         <Association Name="FK_Player_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -266,7 +490,238 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="PlayerPosition" EntitySet="PlayerPosition" />
           </AssociationSet>
+          <EntitySet Name="Colleges" EntityType="DatabaseModel.College" />
+          <EntitySet Name="Conferences" EntityType="DatabaseModel.Conference" />
+          <EntitySet Name="Divisions" EntityType="DatabaseModel.Division" />
+          <EntitySet Name="Locations" EntityType="DatabaseModel.Location" />
+          <EntitySet Name="Matchups" EntityType="DatabaseModel.Matchup" />
+          <EntitySet Name="MatchupStatus" EntityType="DatabaseModel.MatchupStatu" />
+          <EntitySet Name="MatchupTypes" EntityType="DatabaseModel.MatchupType" />
+          <EntitySet Name="Seasons" EntityType="DatabaseModel.Season" />
+          <AssociationSet Name="FK_Player_College" Association="DatabaseModel.FK_Player_College">
+            <End Role="College" EntitySet="Colleges" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Division_Conference" Association="DatabaseModel.FK_Division_Conference">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Division" EntitySet="Divisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Division" Association="DatabaseModel.FK_Team_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Location" Association="DatabaseModel.FK_Matchup_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_MatchupStatus" Association="DatabaseModel.FK_Matchup_MatchupStatus">
+            <End Role="MatchupStatu" EntitySet="MatchupStatus" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_MatchupType" Association="DatabaseModel.FK_Matchup_MatchupType">
+            <End Role="MatchupType" EntitySet="MatchupTypes" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Season" Association="DatabaseModel.FK_Matchup_Season">
+            <End Role="Season" EntitySet="Seasons" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Team" Association="DatabaseModel.FK_Matchup_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matchup_Team1" Association="DatabaseModel.FK_Matchup_Team1">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Matchup" EntitySet="Matchups" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="College">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Players" Relationship="DatabaseModel.FK_Player_College" FromRole="College" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Divisions" Relationship="DatabaseModel.FK_Division_Conference" FromRole="Conference" ToRole="Division" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conference" Relationship="DatabaseModel.FK_Division_Conference" FromRole="Division" ToRole="Conference" />
+          <NavigationProperty Name="Teams" Relationship="DatabaseModel.FK_Team_Division" FromRole="Division" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Matchups" Relationship="DatabaseModel.FK_Matchup_Location" FromRole="Location" ToRole="Matchup" />
+        </EntityType>
+        <EntityType Name="Matchup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SeasonId" Type="Int32" Nullable="false" />
+          <Property Name="MatchupTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TeamAwayId" Type="Int32" Nullable="false" />
+          <Property Name="TeamHomeId" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TeamAwayScore" Type="Int32" Nullable="false" />
+          <Property Name="TeamHomeScore" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="DatabaseModel.FK_Matchup_Location" FromRole="Matchup" ToRole="Location" />
+          <NavigationProperty Name="MatchupStatu" Relationship="DatabaseModel.FK_Matchup_MatchupStatus" FromRole="Matchup" ToRole="MatchupStatu" />
+          <NavigationProperty Name="MatchupType" Relationship="DatabaseModel.FK_Matchup_MatchupType" FromRole="Matchup" ToRole="MatchupType" />
+          <NavigationProperty Name="Season" Relationship="DatabaseModel.FK_Matchup_Season" FromRole="Matchup" ToRole="Season" />
+          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_Matchup_Team" FromRole="Matchup" ToRole="Team" />
+          <NavigationProperty Name="Team1" Relationship="DatabaseModel.FK_Matchup_Team1" FromRole="Matchup" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="MatchupStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Matchups" Relationship="DatabaseModel.FK_Matchup_MatchupStatus" FromRole="MatchupStatu" ToRole="Matchup" />
+        </EntityType>
+        <EntityType Name="MatchupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Matchups" Relationship="DatabaseModel.FK_Matchup_MatchupType" FromRole="MatchupType" ToRole="Matchup" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Matchups" Relationship="DatabaseModel.FK_Matchup_Season" FromRole="Season" ToRole="Matchup" />
+        </EntityType>
+        <Association Name="FK_Player_College">
+          <End Type="DatabaseModel.College" Role="College" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="College">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="CollegeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Division_Conference">
+          <End Type="DatabaseModel.Conference" Role="Conference" Multiplicity="1" />
+          <End Type="DatabaseModel.Division" Role="Division" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Division">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Division">
+          <End Type="DatabaseModel.Division" Role="Division" Multiplicity="1" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="DivisionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Location">
+          <End Type="DatabaseModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_MatchupStatus">
+          <End Type="DatabaseModel.MatchupStatu" Role="MatchupStatu" Multiplicity="1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchupStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_MatchupType">
+          <End Type="DatabaseModel.MatchupType" Role="MatchupType" Multiplicity="1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="MatchupTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Season">
+          <End Type="DatabaseModel.Season" Role="Season" Multiplicity="1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Season">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="SeasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Team">
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="TeamAwayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matchup_Team1">
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="DatabaseModel.Matchup" Role="Matchup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matchup">
+              <PropertyRef Name="TeamHomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -293,6 +748,7 @@
           <EntitySetMapping Name="Player">
             <EntityTypeMapping TypeName="DatabaseModel.Player">
               <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="CollegeId" ColumnName="CollegeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -317,6 +773,7 @@
           <EntitySetMapping Name="Team">
             <EntityTypeMapping TypeName="DatabaseModel.Team">
               <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Abbr" ColumnName="Abbr" />
@@ -331,6 +788,79 @@
               <ScalarProperty Name="Id" ColumnName="PositionId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Colleges">
+            <EntityTypeMapping TypeName="DatabaseModel.College">
+              <MappingFragment StoreEntitySet="College">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="DatabaseModel.Conference">
+              <MappingFragment StoreEntitySet="Conference">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="DatabaseModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="DatabaseModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matchups">
+            <EntityTypeMapping TypeName="DatabaseModel.Matchup">
+              <MappingFragment StoreEntitySet="Matchup">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TeamHomeScore" ColumnName="TeamHomeScore" />
+                <ScalarProperty Name="TeamAwayScore" ColumnName="TeamAwayScore" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="TeamHomeId" ColumnName="TeamHomeId" />
+                <ScalarProperty Name="TeamAwayId" ColumnName="TeamAwayId" />
+                <ScalarProperty Name="MatchupTypeId" ColumnName="MatchupTypeId" />
+                <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchupStatus">
+            <EntityTypeMapping TypeName="DatabaseModel.MatchupStatu">
+              <MappingFragment StoreEntitySet="MatchupStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchupTypes">
+            <EntityTypeMapping TypeName="DatabaseModel.MatchupType">
+              <MappingFragment StoreEntitySet="MatchupType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="DatabaseModel.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -345,7 +875,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
