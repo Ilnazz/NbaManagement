@@ -1,18 +1,19 @@
 ﻿using NbaManagement.Database;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NbaManagement.ViewModels
 {
     public class PlayerPositionViewModel
     {
-        public string PositionName { get; }
+        public PlayerPosition Position { get; }
 
         public IEnumerable<Player> Players { get; }
 
-        public PlayerPositionViewModel(string positionName, IEnumerable<Player> players)
+        public PlayerPositionViewModel(PlayerPosition position, Team team)
         {
-            PositionName = positionName;
-            Players = players;
+            Position = position;
+            Players = team.Players.Where(player => player.Position == position);
         }
     }
 }

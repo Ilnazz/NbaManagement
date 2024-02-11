@@ -18,6 +18,7 @@ namespace NbaManagement.Database
         public Season()
         {
             this.Matchups = new HashSet<Matchup>();
+            this.Team_Player = new HashSet<Team_Player>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace NbaManagement.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matchup> Matchups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Team_Player> Team_Player { get; set; }
     }
 }

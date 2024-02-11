@@ -13,7 +13,7 @@ namespace NbaManagement.Converters
             if (value is Team team == false)
                 return null;
 
-            return new BitmapImage(new Uri($"pack://application:,,,/NbaManagement;component/Resources/Images/Teams/{team.Id}.jpg"));
+            return new BitmapImage(new Uri($"pack://application:,,,/NbaManagement;component/Resources/Images/TeamLogos/{team.Id}.jpg"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>

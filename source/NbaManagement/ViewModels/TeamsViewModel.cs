@@ -24,21 +24,26 @@ namespace NbaManagement.ViewModels
         public IRelayCommand<Team> NavigateToTeamLineupCommand { get; }
         #endregion
 
-        public TeamsViewModel(INavigationService navigationService, TeamService teamService, SeasonService seasonService)
+        public TeamsViewModel
+        (
+            INavigationService navigationService,
+            TeamService teamService,
+            SeasonService seasonService,
+            PlayerPositionService playerPositionService)
         {
             Title = "Teams Main";
 
             NavigateToTeamDetailCommand = new RelayCommand<Team>(team =>
-                navigationService.Navigate(new TeamDetailViewModel(seasonService, team)));
+                navigationService.Navigate(new TeamDetailViewModel(seasonService, playerPositionService, team)));
 
             NavigateToTeamRosterCommand = new RelayCommand<Team>(team =>
-                navigationService.Navigate(new TeamDetailViewModel(seasonService, team, TeamDetail.Roster)));
+                navigationService.Navigate(new TeamDetailViewModel(seasonService, playerPositionService, team, TeamDetail.Roster)));
 
             NavigateToTeamMatchupCommand = new RelayCommand<Team>(team =>
-                navigationService.Navigate(new TeamDetailViewModel(seasonService, team, TeamDetail.Matchup)));
+                navigationService.Navigate(new TeamDetailViewModel(seasonService, playerPositionService, team, TeamDetail.Matchup)));
 
             NavigateToTeamLineupCommand = new RelayCommand<Team>(team =>
-                navigationService.Navigate(new TeamDetailViewModel(seasonService,team, TeamDetail.Lineup)));
+                navigationService.Navigate(new TeamDetailViewModel(seasonService, playerPositionService, team, TeamDetail.Lineup)));
 
             TeamsByDivisionByConferences = teamService
                 .GetConferences()

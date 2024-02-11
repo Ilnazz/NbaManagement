@@ -17,22 +17,24 @@ namespace NbaManagement.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
         {
-            this.Player = new HashSet<Player>();
             this.Matchups = new HashSet<Matchup>();
             this.Matchups1 = new HashSet<Matchup>();
+            this.Team_Player = new HashSet<Team_Player>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Abbr { get; set; }
         public int DivisionId { get; set; }
+        public string Abbr { get; set; }
+        public string Coach { get; set; }
+        public string Stadium { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Player { get; set; }
         public virtual Division Division { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matchup> Matchups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matchup> Matchups1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Team_Player> Team_Player { get; set; }
     }
 }

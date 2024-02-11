@@ -17,26 +17,22 @@ namespace NbaManagement.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Player()
         {
-            this.PlayerPosition = new HashSet<PlayerPosition>();
+            this.Team_Player = new HashSet<Team_Player>();
         }
     
         public int Id { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public int GenderId { get; set; }
-        public int Height { get; set; }
-        public int Weight { get; set; }
-        public int ShirtNumber { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; }
+        public int PositionId { get; set; }
+        public System.DateTime JoinYear { get; set; }
+        public decimal Height { get; set; }
+        public decimal Weight { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
+        public string College { get; set; }
         public int CountryId { get; set; }
-        public int TeamId { get; set; }
-        public Nullable<int> CollegeId { get; set; }
     
         public virtual Country Country { get; set; }
-        public virtual Gender Gender { get; set; }
-        public virtual Team Team { get; set; }
+        public virtual PlayerPosition PlayerPosition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlayerPosition> PlayerPosition { get; set; }
-        public virtual College College { get; set; }
+        public virtual ICollection<Team_Player> Team_Player { get; set; }
     }
 }

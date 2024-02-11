@@ -5,32 +5,30 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="31bd2f5c103a43b2853286477f646271" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.Country" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Gender" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Player" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.PlayerPosition" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseModel.FK_Player_Country" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Player_Gender" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Player_Team" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.Player_Position" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DatabaseModel.College" Width="1.5" PointX="0.75" PointY="18.625" />
-        <EntityTypeShape EntityType="DatabaseModel.Conference" Width="1.5" PointX="0.75" PointY="16" />
-        <EntityTypeShape EntityType="DatabaseModel.Division" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="DatabaseModel.Location" Width="1.5" PointX="0.75" PointY="25.125" />
-        <EntityTypeShape EntityType="DatabaseModel.Matchup" Width="1.5" PointX="3" PointY="0.75" />
-        <EntityTypeShape EntityType="DatabaseModel.MatchupStatu" Width="1.5" PointX="0.75" PointY="27.375" />
-        <EntityTypeShape EntityType="DatabaseModel.MatchupType" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="DatabaseModel.Season" Width="1.5" PointX="0.75" PointY="29.75" />
-        <AssociationConnector Association="DatabaseModel.FK_Player_College" />
+        <EntityTypeShape EntityType="DatabaseModel.Conference" Width="1.5" PointX="1.5" PointY="12.125" />
+        <EntityTypeShape EntityType="DatabaseModel.Country" Width="1.5" PointX="1.5" PointY="23" />
+        <EntityTypeShape EntityType="DatabaseModel.Division" Width="1.5" PointX="1.5" PointY="9" />
+        <EntityTypeShape EntityType="DatabaseModel.Gender" Width="1.5" PointX="2.75" PointY="1.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Matchup" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="DatabaseModel.MatchupStatu" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="DatabaseModel.MatchupType" Width="1.5" PointX="0.75" PointY="15.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Player" Width="1.5" PointX="3.75" PointY="20.875" />
+        <EntityTypeShape EntityType="DatabaseModel.PlayerPosition" Width="1.5" PointX="1.5" PointY="20.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Season" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Team_Player" Width="1.5" PointX="6" PointY="4.25" />
         <AssociationConnector Association="DatabaseModel.FK_Division_Conference" />
+        <AssociationConnector Association="DatabaseModel.FK_Player_Country" />
         <AssociationConnector Association="DatabaseModel.FK_Team_Division" />
-        <AssociationConnector Association="DatabaseModel.FK_Matchup_Location" />
         <AssociationConnector Association="DatabaseModel.FK_Matchup_MatchupStatus" />
         <AssociationConnector Association="DatabaseModel.FK_Matchup_MatchupType" />
         <AssociationConnector Association="DatabaseModel.FK_Matchup_Season" />
         <AssociationConnector Association="DatabaseModel.FK_Matchup_Team" />
         <AssociationConnector Association="DatabaseModel.FK_Matchup_Team1" />
+        <AssociationConnector Association="DatabaseModel.FK_Player_PlayerPosition" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_Player_Player" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_Player_Season" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_Player_Team" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

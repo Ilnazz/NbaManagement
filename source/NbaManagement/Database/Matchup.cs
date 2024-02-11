@@ -22,10 +22,10 @@ namespace NbaManagement.Database
         public System.DateTime StartTime { get; set; }
         public int TeamAwayScore { get; set; }
         public int TeamHomeScore { get; set; }
+        public string Location { get; set; }
         public int StatusId { get; set; }
-        public Nullable<int> LocationId { get; set; }
+        public string CurrentQuarter { get; set; }
     
-        public virtual Location Location { get; set; }
         public virtual MatchupStatu MatchupStatu { get; set; }
         public virtual MatchupType MatchupType { get; set; }
         public virtual Season Season { get; set; }

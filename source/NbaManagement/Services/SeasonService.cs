@@ -1,5 +1,6 @@
 ﻿using NbaManagement.Database;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NbaManagement.Services
 {
@@ -9,6 +10,8 @@ namespace NbaManagement.Services
 
         public SeasonService(DatabaseContext dbContext) => _dbContext = dbContext;
 
-        public IEnumerable<Season> GetSeasons() => _dbContext.Seasons.Local;
+        public IEnumerable<Season> GetSeasons() => _dbContext.Seasons.Local.OrderByDescending(season => season.Name);
+
+        public Season GetCurrentSeason() => GetSeasons().FirstOrDefault();
     }
 }

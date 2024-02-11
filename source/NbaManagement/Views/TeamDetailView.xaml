@@ -54,7 +54,7 @@
         <TabControl Grid.Row="1" SelectedIndex="{Binding ShownTeamDetailIndex, Mode=OneTime}">
             <TabItem Header="Roster">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <DataGrid ItemsSource="{Binding Team.Player}">
+                    <DataGrid ItemsSource="{Binding PlayersInTeam}">
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"
@@ -62,27 +62,27 @@
                                 Header="No." />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Name}"
+                                Binding="{Binding Player.Name}"
                                 Header="Name" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding FirstPositionShortName}"
+                                Binding="{Binding Player.Position.Abbr}"
                                 Header="Position" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding DateOfBirth}"
+                                Binding="{Binding Player.DateOfBirth}"
                                 Header="DateOfBirth" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding College.Name}"
+                                Binding="{Binding Player.College}"
                                 Header="College" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Experience}"
+                                Binding="{Binding Player.Experience}"
                                 Header="Experience" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Salary, StringFormat='{}{0}'}"
+                                Binding="{Binding Salary, StringFormat='{}{0:C0}'}"
                                 Header="Salary" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -91,7 +91,7 @@
 
             <TabItem Header="Matchup">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <DataGrid ItemsSource="{Binding Team.Matchups}">
+                    <DataGrid ItemsSource="{Binding Matchups}">
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"
@@ -125,7 +125,7 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Location.Name}"
+                                Binding="{Binding Location}"
                                 Header="Location" />
                             <DataGridTextColumn
                                 Width="*"

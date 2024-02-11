@@ -15,6 +15,12 @@ namespace NbaManagement.ViewModels
 
         public Team Team { get; }
 
+        public IEnumerable<Team_Player> PlayersInTeam =>
+            Team.Team_Player.Where(teamPlayer => teamPlayer.Season == SelectedSeason);
+
+        public IEnumerable<Matchup> Matchups =>
+            Team.HomeMatchups.Where(matchup => matchup.Season == SelectedSeason);
+
         public IEnumerable<Season> Seasons { get; }
 
         private Season _selectedSeason;
@@ -37,29 +43,32 @@ namespace NbaManagement.ViewModels
 
         public IRelayCommand SearchCommand { get; }
 
-        private readonly SeasonService _seasonService;
-
-        public TeamDetailViewModel(SeasonService seasonService, Team team, TeamDetail? shownTeamDetail = null)
+        public TeamDetailViewModel
+        (
+            SeasonService seasonService,
+            PlayerPositionService playerPositionService,
+            Team team,
+            TeamDetail? shownTeamDetail = null)
         {
-            _seasonService = seasonService;
-
             Title = "Team Detail";
 
             Team = team;
             ShownTeamDetailIndex = shownTeamDetail.HasValue ? (int)shownTeamDetail.Value : -1;
 
-            Seasons = _seasonService.GetSeasons().OrderByDescending(season => season.Name);
+            Seasons = seasonService.GetSeasons();
+            SelectedSeason = seasonService.GetCurrentSeason();
 
-            PowerForwardPositionViewModel = new PlayerPositionViewModel("PF", Team.Player.Where(p => p.IsPowerForward));
-            ShootingGuardPositionViewModel = new PlayerPositionViewModel("SG", Team.Player.Where(p => p.IsShootingGuard));
-            CenterPositionViewModel = new PlayerPositionViewModel("CP", Team.Player.Where(p => p.IsCenter));
-            SmallForwardPositionViewModel = new PlayerPositionViewModel("SF", Team.Player.Where(p => p.IsSmallForward));
-            PointGuardPositionViewModel = new PlayerPositionViewModel("PG", Team.Player.Where(p => p.IsPointGuard));
+            PowerForwardPositionViewModel = new PlayerPositionViewModel(playerPositionService.PowerForward, team);
+            ShootingGuardPositionViewModel = new PlayerPositionViewModel(playerPositionService.ShootingGuard, team);
+            CenterPositionViewModel = new PlayerPositionViewModel(playerPositionService.Center, team);
+            SmallForwardPositionViewModel = new PlayerPositionViewModel(playerPositionService.SmallForward, team);
+            PointGuardPositionViewModel = new PlayerPositionViewModel(playerPositionService.PointGuard, team);
 
-            //SearchCommand = new RelayCommand(() =>
-            //{
-                // Update other properties based on season
-            //});
+            SearchCommand = new RelayCommand(() =>
+            {
+                OnPropertyChanged(nameof(PlayersInTeam));
+                OnPropertyChanged(nameof(Matchups));
+            });
         }
     }
 }

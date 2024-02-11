@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:NbaManagement.Views"
     xmlns:vms="clr-namespace:NbaManagement.ViewModels"
     d:DesignHeight="540"
     d:DesignWidth="960"
@@ -12,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -38,7 +40,6 @@
                 Content="Visitor" />
             <Button
                 Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Type vms:VisitorViewModel}"
                 Content="Admin"
                 IsEnabled="False" />
 
@@ -46,5 +47,11 @@
                 <Style BasedOn="{StaticResource Styles.NavigationButton}" TargetType="Button" />
             </UniformGrid.Resources>
         </UniformGrid>
+
+        <views:PhotoSliderView
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Height="200" />
     </Grid>
 </UserControl>

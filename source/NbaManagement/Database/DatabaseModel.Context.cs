@@ -19,22 +19,23 @@ namespace NbaManagement.Database
             : base("name=DatabaseContext")
         {
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) =>
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
             throw new UnintentionalCodeFirstException();
-
-        public virtual DbSet<Country> Country { get; set; }
-        public virtual DbSet<Gender> Gender { get; set; }
-        public virtual DbSet<Player> Player { get; set; }
-        public virtual DbSet<PlayerPosition> PlayerPosition { get; set; }
-        public virtual DbSet<Team> Team { get; set; }
-        public virtual DbSet<College> Colleges { get; set; }
+        }
+    
         public virtual DbSet<Conference> Conferences { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Division> Divisions { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
+        public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Matchup> Matchups { get; set; }
         public virtual DbSet<MatchupStatu> MatchupStatus { get; set; }
         public virtual DbSet<MatchupType> MatchupTypes { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<PlayerPosition> PlayerPositions { get; set; }
         public virtual DbSet<Season> Seasons { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<Team_Player> Team_Player { get; set; }
     }
 }

@@ -12,18 +12,17 @@ namespace NbaManagement.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class College
+    public partial class Team_Player
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public College()
-        {
-            this.Players = new HashSet<Player>();
-        }
+        public int PlayerId { get; set; }
+        public int TeamId { get; set; }
+        public int SeasonId { get; set; }
+        public int ShirtNumber { get; set; }
+        public decimal Salary { get; set; }
+        public int StarterIndex { get; set; }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Players { get; set; }
+        public virtual Player Player { get; set; }
+        public virtual Season Season { get; set; }
+        public virtual Team Team { get; set; }
     }
 }

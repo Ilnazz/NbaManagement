@@ -1,12 +1,16 @@
-﻿using System;
+﻿using NbaManagement.Database;
+using NbaManagement.Services;
+using System;
 
 namespace NbaManagement.ViewModels
 {
     public class StatusBarViewModel
     {
-        public int SeasonStartYear => DateTime.Now.Date.Year - 1;
+        private readonly SeasonService _seasonService;
 
-        public int SeasonEndYear => SeasonStartYear + 1;
+        public StatusBarViewModel(SeasonService seasonService) => _seasonService = seasonService;
+
+        public Season CurrentSeason => _seasonService.GetCurrentSeason();
 
         public int NbaAge => DateTime.Now.Year - 1946;
     }

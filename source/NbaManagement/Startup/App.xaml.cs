@@ -22,19 +22,16 @@ namespace NbaManagement.Startup
             var databaseContext = new DatabaseContext();
 
             // Caching database entities
-            databaseContext.Team.Load();
-            databaseContext.Player.Load();
-            databaseContext.Gender.Load();
+            databaseContext.Teams.Load();
+            databaseContext.Players.Load();
             databaseContext.Seasons.Load();
-            databaseContext.Country.Load();
-            databaseContext.Colleges.Load();
+            databaseContext.Countries.Load();
             databaseContext.Matchups.Load();
-            databaseContext.Locations.Load();
             databaseContext.Divisions.Load();
             databaseContext.Conferences.Load();
             databaseContext.MatchupTypes.Load();
             databaseContext.MatchupStatus.Load();
-            databaseContext.PlayerPosition.Load();
+            databaseContext.PlayerPositions.Load();
 
             serviceContainer.AddService(typeof(DatabaseContext), databaseContext);
             
@@ -45,6 +42,9 @@ namespace NbaManagement.Startup
             serviceContainer.AddService(typeof(SeasonService), (sc, _) =>
                 new SeasonService(sc.GetRequiredService<DatabaseContext>()));
 
+            serviceContainer.AddService(typeof(PlayerPositionService), (sc, _) =>
+                new PlayerPositionService(sc.GetRequiredService<DatabaseContext>()));
+
             // Registering navigation service
             var navigationService = new NavigationService(serviceContainer);
             serviceContainer.AddService(typeof(INavigationService), navigationService);
@@ -52,8 +52,11 @@ namespace NbaManagement.Startup
             // Registering view models
             serviceContainer.AddService(typeof(NavigationViewModel), (sc, _) =>
                 new NavigationViewModel(sc.GetRequiredService<INavigationService>()));
-            
-            serviceContainer.AddService(typeof(StatusBarViewModel), new StatusBarViewModel());
+
+            serviceContainer.AddService(typeof(PhotoSliderViewModel), new PhotoSliderViewModel());
+
+            serviceContainer.AddService(typeof(StatusBarViewModel), (sc, _) =>
+                new StatusBarViewModel(sc.GetRequiredService<SeasonService>()));
             
             serviceContainer.AddService(typeof(MainViewModel), (sc, _) =>
                 new MainViewModel(sc.GetRequiredService<INavigationService>()));
@@ -65,7 +68,8 @@ namespace NbaManagement.Startup
                 new TeamsViewModel(
                     sc.GetRequiredService<INavigationService>(),
                     sc.GetRequiredService<TeamService>(),
-                    sc.GetRequiredService<SeasonService>()));
+                    sc.GetRequiredService<SeasonService>(),
+                    sc.GetRequiredService<PlayerPositionService>()));
             
             // Creating and showing window
             new MainWindow().Show();

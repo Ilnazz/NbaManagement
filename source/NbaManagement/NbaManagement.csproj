@@ -170,9 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\TeamToImageConverter.cs" />
-    <Compile Include="Database\College.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\Conference.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -181,9 +178,7 @@
     </Compile>
     <Compile Include="Database\EntityExtensions\Matchup.cs" />
     <Compile Include="Database\EntityExtensions\Player.cs" />
-    <Compile Include="Database\Location.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Database\EntityExtensions\Team.cs" />
     <Compile Include="Database\Matchup.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -194,6 +189,9 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Season.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Team_Player.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\TeamDetail.cs" />
@@ -237,6 +235,7 @@
     <Compile Include="Database\Team.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\PlayerPositionService.cs" />
     <Compile Include="Services\SeasonService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Startup\App.xaml.cs">
@@ -248,6 +247,7 @@
     <Compile Include="ViewModels\Base\NavigatableTitledViewModel.cs" />
     <Compile Include="ViewModels\Base\TitledViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PhotoSliderViewModel.cs" />
     <Compile Include="ViewModels\PlayerPositionViewModel.cs" />
     <Compile Include="ViewModels\TeamDetailViewModel.cs" />
     <Compile Include="Models\TeamsByDivision.cs" />
@@ -261,6 +261,9 @@
     </Compile>
     <Compile Include="Views\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PhotoSliderView.xaml.cs">
+      <DependentUpon>PhotoSliderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlayerPositionView.xaml.cs">
       <DependentUpon>PlayerPositionView.xaml</DependentUpon>
@@ -316,94 +319,148 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Teams\1.jpg">
+    <Resource Include="Resources\Images\MatchupPhotos\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\11.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\12.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\13.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\15.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\16.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\17.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MatchupPhotos\9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\TeamLogos\1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\10.jpg">
+    <Resource Include="Resources\Images\TeamLogos\10.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\11.jpg">
+    <Resource Include="Resources\Images\TeamLogos\11.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\12.jpg">
+    <Resource Include="Resources\Images\TeamLogos\12.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\13.jpg">
+    <Resource Include="Resources\Images\TeamLogos\13.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\14.jpg">
+    <Resource Include="Resources\Images\TeamLogos\14.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\15.jpg">
+    <Resource Include="Resources\Images\TeamLogos\15.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\16.jpg">
+    <Resource Include="Resources\Images\TeamLogos\16.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\17.jpg">
+    <Resource Include="Resources\Images\TeamLogos\17.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\18.jpg">
+    <Resource Include="Resources\Images\TeamLogos\18.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\19.jpg">
+    <Resource Include="Resources\Images\TeamLogos\19.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\2.jpg">
+    <Resource Include="Resources\Images\TeamLogos\2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\20.jpg">
+    <Resource Include="Resources\Images\TeamLogos\20.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\21.jpg">
+    <Resource Include="Resources\Images\TeamLogos\21.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\22.jpg">
+    <Resource Include="Resources\Images\TeamLogos\22.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\23.jpg">
+    <Resource Include="Resources\Images\TeamLogos\23.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\24.jpg">
+    <Resource Include="Resources\Images\TeamLogos\24.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\25.jpg">
+    <Resource Include="Resources\Images\TeamLogos\25.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\26.jpg">
+    <Resource Include="Resources\Images\TeamLogos\26.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\27.jpg">
+    <Resource Include="Resources\Images\TeamLogos\27.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\28.jpg">
+    <Resource Include="Resources\Images\TeamLogos\28.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\29.jpg">
+    <Resource Include="Resources\Images\TeamLogos\29.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\3.jpg">
+    <Resource Include="Resources\Images\TeamLogos\3.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\30.jpg">
+    <Resource Include="Resources\Images\TeamLogos\30.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\4.jpg">
+    <Resource Include="Resources\Images\TeamLogos\4.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\5.jpg">
+    <Resource Include="Resources\Images\TeamLogos\5.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\6.jpg">
+    <Resource Include="Resources\Images\TeamLogos\6.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\7.jpg">
+    <Resource Include="Resources\Images\TeamLogos\7.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\8.jpg">
+    <Resource Include="Resources\Images\TeamLogos\8.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\Teams\9.jpg">
+    <Resource Include="Resources\Images\TeamLogos\9.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\Lineup.jpg">
@@ -435,6 +492,10 @@
     <Page Include="Startup\MainWindow.xaml" />
     <Page Include="Views\MainView.xaml" />
     <Page Include="Views\NavigationView.xaml" />
+    <Page Include="Views\PhotoSliderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlayerPositionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

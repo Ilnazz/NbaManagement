@@ -11,7 +11,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="Yellow">
-            <TextBlock Foreground="{StaticResource Colors.AccentColor}" Text="{Binding PositionName}" />
+            <TextBlock Foreground="{StaticResource Colors.AccentColor}" Text="{Binding Position.Abbr}" />
             <Border.RenderTransform>
                 <TranslateTransform X="-20" Y="-5" />
             </Border.RenderTransform>

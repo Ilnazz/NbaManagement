@@ -17,7 +17,7 @@ namespace NbaManagement.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Country()
         {
-            this.Player = new HashSet<Player>();
+            this.Players = new HashSet<Player>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace NbaManagement.Database
         public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Player> Player { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
     }
 }
