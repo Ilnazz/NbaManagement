@@ -1,7 +1,9 @@
 ﻿using NbaManagement.Database;
 using NbaManagement.Enums;
 using NbaManagement.Mvvm.Input;
+using NbaManagement.Services;
 using NbaManagement.ViewModels.Base;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NbaManagement.ViewModels
@@ -12,6 +14,15 @@ namespace NbaManagement.ViewModels
         public int ShownTeamDetailIndex { get; }
 
         public Team Team { get; }
+
+        public IEnumerable<Season> Seasons { get; }
+
+        private Season _selectedSeason;
+        public Season SelectedSeason
+        {
+            get => _selectedSeason;
+            set => SetProperty(ref _selectedSeason, value);
+        }
 
         public PlayerPositionViewModel PowerForwardPositionViewModel { get; }
 
@@ -26,12 +37,18 @@ namespace NbaManagement.ViewModels
 
         public IRelayCommand SearchCommand { get; }
 
-        public TeamDetailViewModel(Team team, TeamDetail? shownTeamDetail = null)
+        private readonly SeasonService _seasonService;
+
+        public TeamDetailViewModel(SeasonService seasonService, Team team, TeamDetail? shownTeamDetail = null)
         {
+            _seasonService = seasonService;
+
+            Title = "Team Detail";
+
             Team = team;
             ShownTeamDetailIndex = shownTeamDetail.HasValue ? (int)shownTeamDetail.Value : -1;
-            
-            Title = "Team Detail";
+
+            Seasons = _seasonService.GetSeasons().OrderByDescending(season => season.Name);
 
             PowerForwardPositionViewModel = new PlayerPositionViewModel("PF", Team.Player.Where(p => p.IsPowerForward));
             ShootingGuardPositionViewModel = new PlayerPositionViewModel("SG", Team.Player.Where(p => p.IsShootingGuard));
@@ -39,10 +56,10 @@ namespace NbaManagement.ViewModels
             SmallForwardPositionViewModel = new PlayerPositionViewModel("SF", Team.Player.Where(p => p.IsSmallForward));
             PointGuardPositionViewModel = new PlayerPositionViewModel("PG", Team.Player.Where(p => p.IsPointGuard));
 
-            SearchCommand = new RelayCommand(() =>
-            {
-
-            });
+            //SearchCommand = new RelayCommand(() =>
+            //{
+                // Update other properties based on season
+            //});
         }
     }
 }

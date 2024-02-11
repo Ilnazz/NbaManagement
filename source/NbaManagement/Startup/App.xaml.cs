@@ -41,7 +41,10 @@ namespace NbaManagement.Startup
             // Registering services that depend on database
             serviceContainer.AddService(typeof(TeamService), (sc, _) =>
                 new TeamService(sc.GetRequiredService<DatabaseContext>()));
-            
+
+            serviceContainer.AddService(typeof(SeasonService), (sc, _) =>
+                new SeasonService(sc.GetRequiredService<DatabaseContext>()));
+
             // Registering navigation service
             var navigationService = new NavigationService(serviceContainer);
             serviceContainer.AddService(typeof(INavigationService), navigationService);
@@ -59,7 +62,10 @@ namespace NbaManagement.Startup
                 new VisitorViewModel(sc.GetRequiredService<INavigationService>()));
             
             serviceContainer.AddService(typeof(TeamsViewModel), (sc, _) =>
-                new TeamsViewModel(sc.GetRequiredService<INavigationService>(), sc.GetRequiredService<TeamService>()));
+                new TeamsViewModel(
+                    sc.GetRequiredService<INavigationService>(),
+                    sc.GetRequiredService<TeamService>(),
+                    sc.GetRequiredService<SeasonService>()));
             
             // Creating and showing window
             new MainWindow().Show();

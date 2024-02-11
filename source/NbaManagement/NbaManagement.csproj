@@ -237,6 +237,7 @@
     <Compile Include="Database\Team.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\SeasonService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Startup\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
