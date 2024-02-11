@@ -8,6 +8,18 @@ namespace NbaManagement.Database
 
         public PlayerPosition FirstPosition => PlayerPosition.FirstOrDefault();
 
+        public string FirstPositionShortName
+        {
+            get
+            {
+                if (FirstPosition is null)
+                    return string.Empty;
+
+                var positionName = FirstPosition.Name;
+                return new string(positionName.Where(c => char.IsUpper(c)).ToArray());
+            }
+        }
+
         public bool IsSmallForward => IsPlayerHasPositionWithId(1);
 
         public bool IsPowerForward => IsPlayerHasPositionWithId(2);

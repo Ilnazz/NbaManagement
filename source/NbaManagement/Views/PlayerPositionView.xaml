@@ -17,26 +17,24 @@
             </Border.RenderTransform>
         </Border>
 
-        <StackPanel Margin="30,10,10,10">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Players}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                x:Name="PlayerName"
-                                Margin="0,5,0,0"
-                                Foreground="{StaticResource Colors.AccentColor}"
-                                Text="{Binding Name}" />
+        <ScrollViewer Margin="30,10,10,10" VerticalScrollBarVisibility="Auto">
+            <ItemsControl Margin="0,0,5,0" ItemsSource="{Binding Players}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            x:Name="PlayerName"
+                            Margin="0,5,0,0"
+                            Foreground="{StaticResource Colors.AccentColor}"
+                            Text="{Binding Name}" />
 
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                                    <Setter TargetName="PlayerName" Property="FontWeight" Value="Bold" />
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </StackPanel>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                <Setter TargetName="PlayerName" Property="FontWeight" Value="Bold" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

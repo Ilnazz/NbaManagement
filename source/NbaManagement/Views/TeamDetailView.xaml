@@ -62,8 +62,12 @@
                                 Header="No." />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding FirstPosition.Name}"
+                                Binding="{Binding Name}"
                                 Header="Name" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding FirstPositionShortName}"
+                                Header="Position" />
                             <DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding DateOfBirth}"
@@ -91,7 +95,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding Date, StringFormat='{}{0:yyyy/MM/dd}'}"
+                                Binding="{Binding StartTime, StringFormat='{}{0:yyyy/MM/dd}'}"
                                 Header="Date" />
                             <DataGridTextColumn
                                 Width="*"
@@ -103,7 +107,7 @@
                                 Header="Opponent" />
                             <DataGridTextColumn
                                 Width="*"
-                                Binding="{Binding StartTime, StringFormat='{}{0}'}"
+                                Binding="{Binding StartTime, StringFormat='{}{0:hh:mm tt}'}"
                                 Header="StartTime" />
                             <DataGridTemplateColumn Width="*" Header="Result">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -169,12 +173,13 @@
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="1"
+                        VerticalAlignment="Center"
                         DataContext="{Binding ShootingGuardPositionViewModel}" />
 
                     <views:PlayerPositionView
                         Grid.Row="1"
                         Grid.Column="3"
-                        VerticalAlignment="Bottom"
+                        VerticalAlignment="Center"
                         DataContext="{Binding CenterPositionViewModel}" />
 
                     <views:PlayerPositionView
@@ -189,6 +194,7 @@
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="5"
+                        VerticalAlignment="Center"
                         DataContext="{Binding PointGuardPositionViewModel}" />
                 </Grid>
             </TabItem>
