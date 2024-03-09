@@ -194,7 +194,7 @@
     <Compile Include="Database\Team_Player.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Enums\TeamDetail.cs" />
+    <Compile Include="Models\TeamDetail.cs" />
     <Compile Include="Mvvm\ComponentModel\ObservableObject.cs" />
     <Compile Include="Mvvm\DependencyInjection\Ioc.cs" />
     <Compile Include="Mvvm\DependencyInjection\ServiceProviderExtensions.cs" />

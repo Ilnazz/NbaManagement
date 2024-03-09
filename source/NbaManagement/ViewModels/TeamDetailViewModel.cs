@@ -1,5 +1,5 @@
 ﻿using NbaManagement.Database;
-using NbaManagement.Enums;
+using NbaManagement.Models;
 using NbaManagement.Mvvm.Input;
 using NbaManagement.Services;
 using NbaManagement.ViewModels.Base;

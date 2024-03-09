@@ -1,4 +1,4 @@
-﻿namespace NbaManagement.Enums
+﻿namespace NbaManagement.Models
 {
     public enum TeamDetail
     {

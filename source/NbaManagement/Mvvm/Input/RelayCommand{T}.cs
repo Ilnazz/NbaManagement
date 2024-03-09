@@ -14,12 +14,12 @@ namespace NbaManagement.Mvvm.Input
             _canExecute = canExecute;
         }
 
-        public void Execute(T parameter) => _execute(parameter);
-
         public override void Execute(object parameter) => Execute((T)parameter);
 
-        public bool CanExecute(T parameter) => _canExecute?.Invoke(parameter) != false;
+        public void Execute(T parameter) => _execute(parameter);
 
         public override bool CanExecute(object parameter) => CanExecute((T)parameter);
+
+        public bool CanExecute(T parameter) => _canExecute?.Invoke(parameter) != false;
     }
 }
